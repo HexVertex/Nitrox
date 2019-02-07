@@ -109,23 +109,18 @@ namespace NitroxClient.MonoBehaviours.Gui.MainMenu
             joinServerGameObject = new GameObject();
             JoinServer joinServerComponent = joinServerGameObject.AddComponent<JoinServer>();
 
-            if (Regex.IsMatch(serverIp, "^[0-9:\\[\\]a-f]+$"))
+            if (Regex.IsMatch(serverIp, @"^[0-9:\[\]a-f]+$"))
             {
-                Log.InGame("IPv6 Detected");
                 ResolveIpv6(joinServerComponent, serverIp);
             }
             else if (Regex.IsMatch(serverIp, "^[0-9.:]+$"))
             {
-                Log.InGame("IPv4 Detected");
                 ResolveIpv4(joinServerComponent, serverIp);
             }
             else
             {
-                Log.InGame("Other Detected");
                 ResolveHostName(joinServerComponent, serverIp);
             }
-            Log.InGame("IP: " + joinServerComponent.ServerIp);
-            Log.InGame("Port: " + joinServerComponent.serverPort);
         }
 
         public void ShowAddServerWindow()
@@ -207,10 +202,6 @@ namespace NitroxClient.MonoBehaviours.Gui.MainMenu
                 {
                     joinServerComponent.ServerIp = splitIP.Groups[1].ToString();
                     joinServerComponent.serverPort = int.Parse(splitIP.Groups[2].ToString());
-                }
-                else
-                {
-                    Log.InGame("IP Format Error");
                 }
             }
             else
